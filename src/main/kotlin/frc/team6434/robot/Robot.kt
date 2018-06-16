@@ -22,6 +22,11 @@ class Robot : IterativeRobot() {
     val LIFT_C_CHANNEL = 3
     val LIFT_D_CHANNEL = 4
 
+
+    val CROSS_LINE_DURATION = 2.0
+    val CROSS_LINE_POWER = 0.75
+
+
     lateinit var controller: XboxController
 
     lateinit var leftA: WPI_TalonSRX
@@ -76,6 +81,28 @@ class Robot : IterativeRobot() {
         return 1.0
       return 0.0
     }
+
+
+    var startTime: Long = 0
+
+    override fun autonomousInit() {
+      startTime = System.currentTimeMillis() 
+
+    }
+
+    override fun autonomousPeriodic() {
+      val currentTime = System.currentTimeMillis() 
+      val elapsedTime = currentTime-startTime
+
+
+      var drivePower = if (elapsedTime < CROSS_LINE_DURATION) CROSS_LINE_POWER else 0.0
+      SmartDashboard.putNumber("leftPower", drivePower)
+      SmartDashboard.putNumber("rightPower", drivePower)
+      leftA.set(drivePower)
+      rightA.set(drivePower)
+    }
+
+
 
     override fun teleopPeriodic() {
       val x = controller.getY(Hand.kLeft)

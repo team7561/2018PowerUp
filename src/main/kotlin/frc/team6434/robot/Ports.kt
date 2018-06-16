@@ -1,6 +1,6 @@
 package frc.team6434.robot
 
-class Ports {
+object Ports {
     val XBOX_CONTROLLER_PORT = 0
 
     // CAN Bus Node IDs

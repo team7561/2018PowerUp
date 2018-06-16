@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand
 import edu.wpi.first.wpilibj.IterativeRobot
 import edu.wpi.first.wpilibj.XboxController
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 
 class Robot : IterativeRobot() {
     val XBOX_CONTROLLER_PORT = 0
@@ -43,12 +44,28 @@ class Robot : IterativeRobot() {
       return num
     }
 
+    fun optionallyReverse(num: Double, switch: Boolean): Double {
+      if (switch)
+        return -num
+      
+      return num
+    }
+
     override fun teleopPeriodic() {
       val x = controller.getX(Hand.kLeft)
       val y = controller.getY(Hand.kRight)
+      SmartDashboard.putNumber("x", x)
+      SmartDashboard.putNumber("y", y)
 
-      var leftPower = clamp(y + x)
-      var rightPower = clamp(y - x)
+      // based on getBButton(), reverse x
+      val orx = optionallyReverse(x, controller.getBButton())
+      SmartDashboard.putNumber("orx", orx)
+
+
+      var leftPower = clamp(y + orx)
+      var rightPower = clamp(y - orx)
+      SmartDashboard.putNumber("leftPower", leftPower)
+      SmartDashboard.putNumber("rightPower", rightPower)
       leftA.set(leftPower)
       rightA.set(rightPower)
     }

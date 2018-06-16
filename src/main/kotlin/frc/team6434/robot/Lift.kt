@@ -22,7 +22,7 @@ class Lift {
         setLiftPower(0.0)
       }
 
-      private setLiftPower(liftPower: Double) {
+      fun setLiftPower(liftPower: Double) {
         SmartDashboard.putNumber("liftPower", liftPower)
         liftA.set(liftPower)
         liftB.set(liftPower)

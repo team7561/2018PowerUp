@@ -3,7 +3,7 @@ package frc.team6434.robot
 import edu.wpi.first.wpilibj.GenericHID.Hand
 import edu.wpi.first.wpilibj.IterativeRobot
 import edu.wpi.first.wpilibj.XboxController
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 
 
 class Robot : IterativeRobot() {
@@ -16,7 +16,7 @@ class Robot : IterativeRobot() {
     override fun robotInit() {
         println("Hello Illawarra 9761")
 
-        controller = XboxController(XBOX_CONTROLLER_PORT)
+        controller = XboxController(Ports.XBOX_CONTROLLER_PORT)
 
         drivetrain = Drivetrain()
         lift = Lift()
@@ -37,10 +37,6 @@ class Robot : IterativeRobot() {
       return num
     }
 
-          fun getLiftPower(leftBumper: Boolean, rightBumper: Boolean): Double {
-           
-          }
-
 
     var startTime: Long = 0
 
@@ -54,7 +50,7 @@ class Robot : IterativeRobot() {
       val elapsedTime = currentTime-startTime
 
 
-      var drivePower = if (elapsedTime < CROSS_LINE_DURATION) CROSS_LINE_POWER else 0.0
+      var drivePower = if (elapsedTime < Speeds.CROSS_LINE_DURATION) Speeds.CROSS_LINE_POWER else 0.0
       drivetrain.setPower(drivePower, drivePower) 
     }
 
@@ -75,7 +71,8 @@ class Robot : IterativeRobot() {
       var rightPower = clamp(y - orx)
       drivetrain.setPower(leftPower, rightPower)
 
-
+      val leftBumper = controller.getBumper(Hand.kLeft)
+      val rightBumper = controller.getBumper(Hand.kRight)
       if (leftBumper)
         lift.raise()
       else if (rightBumper)

@@ -2,20 +2,20 @@ package frc.team6434.robot
 
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import edu.wpi.first.wpilibj.Spark
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
 
 class Lift {
-      val liftA = Spark(Ports.LIFT_A_CHANNEL)
-      val liftB = Spark(Ports.LIFT_B_CHANNEL)
-      val liftC = Spark(Ports.LIFT_C_CHANNEL)
-      val liftD = Spark(Ports.LIFT_D_CHANNEL)
+      val liftA = WPI_TalonSRX(Ports.LIFT_LEFT_A_CANID)
+      val liftB = WPI_TalonSRX(Ports.LIFT_LEFT_B_CANID)
+      val liftC = WPI_TalonSRX(Ports.LIFT_RIGHT_A_CANID)
+      val liftD = WPI_TalonSRX(Ports.LIFT_RIGHT_B_CANID)
 
       fun raise() {
-        setLiftPower(Speeds.RAISE_POWER)
+        setLiftPower(Speeds.LIFT_RAISE_POWER)
       }
 
       fun lower() {
-        setLiftPower(Speeds.LOWER_POWER)
+        setLiftPower(Speeds.LIFT_LOWER_POWER)
       }
 
       fun stop() {

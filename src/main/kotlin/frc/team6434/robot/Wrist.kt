@@ -2,17 +2,16 @@ package frc.team6434.robot
 
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import edu.wpi.first.wpilibj.Spark
-
+import edu.wpi.first.wpilibj.VictorSP
 class Wrist {
-      val motor = Spark(Ports.WRIST_CHANNEL)
+      val motor = VictorSP(Ports.WRIST_CHANNEL)
       
       fun raise() {
-        setWristPower(Speeds.RAISE_POWER)
+        setWristPower(Speeds.WRIST_RAISE_POWER)
       }
 
       fun lower() {
-        setWristPower(Speeds.LOWER_POWER)
+        setWristPower(Speeds.WRIST_LOWER_POWER)
       }
 
       fun stop() {

@@ -1,25 +1,25 @@
 package frc.team6434.robot
 
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
+import edu.wpi.first.wpilibj.VictorSP
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 
 
 class Drivetrain {
-    val leftA = WPI_TalonSRX(Ports.LEFT_A_CANID)
-    val leftB = WPI_TalonSRX(Ports.LEFT_B_CANID)
-    val rightA = WPI_TalonSRX(Ports.RIGHT_A_CANID)
-    val rightB = WPI_TalonSRX(Ports.RIGHT_B_CANID)
-    
-    init {
-        leftB.follow(leftA)
-        rightB.follow(rightA)
-    }
 
+
+    val leftA = VictorSP(Ports.DRIVE_LEFT_A_CHANNEL)
+    val leftB = VictorSP(Ports.DRIVE_LEFT_B_CHANNEL)
+    val rightA = VictorSP(Ports.DRIVE_RIGHT_A_CHANNEL)
+    val rightB = VictorSP(Ports.DRIVE_RIGHT_B_CHANNEL)
+    
+    
     fun setPower(leftPower: Double, rightPower: Double) {
       SmartDashboard.putNumber("leftPower", leftPower)
       SmartDashboard.putNumber("rightPower", rightPower)
       leftA.set(leftPower)
+      leftB.set(leftPower)
       rightA.set(rightPower)
+      rightB.set(rightPower)
     }
 }

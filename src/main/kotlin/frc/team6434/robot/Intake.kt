@@ -2,15 +2,17 @@ package frc.team6434.robot
 
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import edu.wpi.first.wpilibj.Spark
+import edu.wpi.first.wpilibj.Talon
 
 class Intake {
-      val intakeLeft = Spark(Ports.INTAKE_LEFT_CHANNEL)
-      val intakeRight = Spark(Ports.INTAKE_RIGHT_CHANNEL)
+ 
+
+      val intakeLeft = Talon(Ports.INTAKE_LEFT_CHANNEL)
+      val intakeRight = Talon(Ports.INTAKE_RIGHT_CHANNEL)
       
 
       fun grab() {
-        // setIntakePower(Speeds.IN_POWER)
+        setIntakePower(Speeds.IN_POWER)
       }
 
       fun eject() {

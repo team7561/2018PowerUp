@@ -10,8 +10,11 @@ object Speeds {
 
     val WRIST_LOWER_DURATION = 0.25
 
-    val RAISE_POWER = 0.5
-    val LOWER_POWER = -0.3
+    val LIFT_RAISE_POWER = 0.5
+    val LIFT_LOWER_POWER = -0.3
+
+    val WRIST_RAISE_POWER = 0.5
+    val WRIST_LOWER_POWER = -0.5
 
     val OUT_POWER = 0.2
     val IN_POWER = -0.2

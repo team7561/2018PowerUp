@@ -12,7 +12,9 @@ class Robot : IterativeRobot() {
 
     lateinit var drivetrain: Drivetrain
     lateinit var lift: Lift
-  
+    lateinit var wrist: Wrist
+    lateinit var intake: Intake
+    
     override fun robotInit() {
         println("Hello Illawarra 9761")
 
@@ -20,6 +22,8 @@ class Robot : IterativeRobot() {
 
         drivetrain = Drivetrain()
         lift = Lift()
+        wrist = Wrist()
+        intake = Intake()
     }
 
     fun clamp(num: Double): Double {
@@ -52,32 +56,62 @@ class Robot : IterativeRobot() {
 
       var drivePower = if (elapsedTime < Speeds.CROSS_LINE_DURATION) Speeds.CROSS_LINE_POWER else 0.0
       drivetrain.setPower(drivePower, drivePower) 
+
+
+      if (elapsedTime < Speeds.WRIST_LOWER_DURATION)
+        wrist.lower()
+      else 
+        wrist.stop()
     }
 
 
 
     override fun teleopPeriodic() {
-      val x = controller.getY(Hand.kLeft)
-      val y = controller.getX(Hand.kRight)
-      SmartDashboard.putNumber("x", x)
-      SmartDashboard.putNumber("y", y)
+      run {
+        val x = controller.getY(Hand.kLeft)
+        val y = controller.getX(Hand.kRight)
+        SmartDashboard.putNumber("x", x)
+        SmartDashboard.putNumber("y", y)
+      
+        // based on getBButton(), reverse x
+        val orx = optionallyReverse(x, controller.getBButton())
+        SmartDashboard.putNumber("orx", orx)
+      
+        var leftPower = clamp(y + orx)
+        var rightPower = clamp(y - orx)
+        drivetrain.setPower(leftPower, rightPower)
+      }
 
-      // based on getBButton(), reverse x
-      val orx = optionallyReverse(x, controller.getBButton())
-      SmartDashboard.putNumber("orx", orx)
+      run {
+        val leftBumper = controller.getBumper(Hand.kLeft)
+        val rightBumper = controller.getBumper(Hand.kRight)
+        if (leftBumper)
+          lift.raise()
+        else if (rightBumper)
+          lift.lower()
+        else
+          lift.stop()     
+      }
 
-
-      var leftPower = clamp(y + orx)
-      var rightPower = clamp(y - orx)
-      drivetrain.setPower(leftPower, rightPower)
-
-      val leftBumper = controller.getBumper(Hand.kLeft)
-      val rightBumper = controller.getBumper(Hand.kRight)
-      if (leftBumper)
-        lift.raise()
-      else if (rightBumper)
-        lift.lower()
-      else
-        lift.stop()     
+      run {
+        val yButton = controller.getYButton()
+        val aButton = controller.getAButton()
+        if (yButton)
+          wrist.raise()
+        else if (aButton)
+          wrist.lower()
+        else
+          wrist.stop()  
+      }
+      run {
+        val leftTrigger: Boolean = (controller.getTriggerAxis(Hand.kLeft) > Speeds.TRIGGER_THRESHOLD)
+        val rightTrigger: Boolean = (controller.getTriggerAxis(Hand.kRight) > Speeds.TRIGGER_THRESHOLD)
+        if (rightTrigger)
+          intake.grab()
+        else if (leftTrigger)
+          intake.eject()
+        else
+          intake.stop() 
+      }
     }
 }

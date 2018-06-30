@@ -14,4 +14,7 @@ object Ports {
     val LIFT_B_CHANNEL = 2
     val LIFT_C_CHANNEL = 3
     val LIFT_D_CHANNEL = 4
+    val WRIST_CHANNEL = 5
+    val INTAKE_LEFT_CHANNEL = 6
+    val INTAKE_RIGHT_CHANNEL = 7
 }

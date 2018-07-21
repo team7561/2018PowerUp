@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.GenericHID.Hand
 import edu.wpi.first.wpilibj.IterativeRobot
 import edu.wpi.first.wpilibj.XboxController
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
+import edu.wpi.first.wpilibj.CameraServer
+
 
 
 class Robot : IterativeRobot() {
@@ -19,6 +21,7 @@ class Robot : IterativeRobot() {
         println("Hello Illawarra 9761")
 
         controller = XboxController(Ports.XBOX_CONTROLLER_PORT)
+        CameraServer.getInstance().startAutomaticCapture()
 
         drivetrain = Drivetrain()
         lift = Lift()

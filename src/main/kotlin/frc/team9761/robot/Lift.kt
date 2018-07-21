@@ -28,7 +28,10 @@ class Lift {
         liftB.set(liftPower)
         liftC.set(-liftPower)
         liftD.set(-liftPower)
-
+        SmartDashboard.putNumber("Talon SRX current A", liftA.getOutputCurrent())
+        SmartDashboard.putNumber("Talon SRX current B", liftB.getOutputCurrent())
+        SmartDashboard.putNumber("Talon SRX current C", liftC.getOutputCurrent())
+        SmartDashboard.putNumber("Talon SRX current D", liftD.getOutputCurrent())
       }
 
       

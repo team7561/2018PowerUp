@@ -61,13 +61,13 @@ class Robot : IterativeRobot() {
       drivetrain.setPower(drivePower, drivePower) 
 
 
-      if (elapsedTime < Speeds.WRIST_LOWER_DURATION)
-        wrist.lower()
-      else 
-        wrist.stop()
+      if (elapsedTime < Speeds.LIFT_RAISE_DURATION)
+        lift.raise()
+      else {
+        lift.stop()
+        wrist.release()
+      }
     }
-
-
 
     override fun teleopPeriodic() {
       run {
